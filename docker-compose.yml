@@ -1,0 +1,9 @@
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET no .env}
+      PORT: 3000
+    restart: unless-stopped
