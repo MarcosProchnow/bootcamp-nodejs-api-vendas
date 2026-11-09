@@ -29,4 +29,4 @@ Cada item da ementa e o que foi feito neste repositório. As avaliações da pla
 | 4 | Contêineres | feito | `Dockerfile`, `docker-compose.yml` |
 | 5 | Desafio Final | integra os itens acima | este projeto |
 
-> CI (GitHub Actions, Node 18 e 20): 7 suites, 31 testes passando, cobertura de linhas ~95%.
+> CI (GitHub Actions, Node 18 e 20): 8 suites, 43 testes passando (incluindo MongoDB real via service container), cobertura de linhas ~95%.
