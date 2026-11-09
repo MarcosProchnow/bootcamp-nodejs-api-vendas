@@ -45,6 +45,7 @@ function createApp({ repositories } = {}) {
   app.use(requestLogger);
   app.use('/docs', express.static(path.join(__dirname, '..', 'docs')));
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiDoc));
+  app.use('/app', express.static(path.join(__dirname, '..', 'public')));
 
   app.get('/health', (req, res) => res.json({ status: 'ok' }));
 

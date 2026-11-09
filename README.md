@@ -62,9 +62,11 @@ tests/                   Jest + supertest
 docs/openapi.json        documentação da API
 ```
 
-## Mapa do bootcamp → projeto
+## Estudos por módulo
 
-Veja [docs/ATIVIDADES.md](docs/ATIVIDADES.md).
+Anotações individuais do que foi estudado em cada módulo: [docs/estudos](docs/estudos/README.md). Mapa tópico → código: [docs/ATIVIDADES.md](docs/ATIVIDADES.md).
+
+Painel front end em `/app` · Swagger UI em `/api-docs`.
 
 ## Persistência
 - Sem `DATABASE_URL`: dados em memória.
