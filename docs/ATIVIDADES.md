@@ -27,4 +27,4 @@ Cada item da ementa e o que foi feito neste repositório. As avaliações da pla
 | 4 | Contêineres | feito | `Dockerfile`, `docker-compose.yml` |
 | 5 | Desafio Final | integra os itens acima | este projeto |
 
-> Os testes foram escritos, mas **ainda não foram executados** (ambiente sem Node.js). Rode `npm install && npm test` antes de publicar.
+> Testes executados no GitHub Codespaces (Node 24): 4 suites, 20 testes, todos passando.
