@@ -16,6 +16,9 @@ const {
 } = require('./services/domain');
 const { createCrudRouter, wrap } = require('./routes/crudRouter');
 const { createGraphqlHandler } = require('./graphql/handler');
+const { createProductInfoService } = require('./services/productInfoService');
+const { createProductInfoRouter } = require('./routes/productInfoRouter');
+const { createMemoryProductInfoRepository } = require('./repositories/productInfoRepository');
 
 // Factory: cada chamada cria uma instância isolada. Por padrão usa repositories
 // em memória; passe `repositories` (ex.: Sequelize) para persistir em banco.
@@ -26,6 +29,10 @@ function createApp({ repositories } = {}) {
   const suppliers = createSuppliersService(repos.suppliers);
   const products = createProductsService(repos.products, suppliers);
   const sales = createSalesService(repos.sales, clients, products, repos.products);
+  const productInfo = createProductInfoService(
+    repos.productInfos || createMemoryProductInfoRepository(),
+    products,
+  );
   const auth = createAuthService(repos.users, config);
   const oauth = createOAuthService(config);
 
@@ -53,6 +60,7 @@ function createApp({ repositories } = {}) {
   app.all('/graphql', createGraphqlHandler({ clients, suppliers, products, sales }));
   app.use('/clients', createCrudRouter(clients));
   app.use('/suppliers', createCrudRouter(suppliers));
+  app.use('/products/:id', createProductInfoRouter(productInfo));
   app.use('/products', createCrudRouter(products));
   app.use('/sales', createCrudRouter(sales, { update: false }));
 

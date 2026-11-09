@@ -7,23 +7,195 @@
   },
   "components": {
     "securitySchemes": {
-      "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" },
-      "basicAuth": { "type": "http", "scheme": "basic" }
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
     }
   },
-  "security": [{ "bearerAuth": [] }],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
-    "/health": { "get": { "security": [], "summary": "Health check", "responses": { "200": { "description": "ok" } } } },
-    "/auth/register": { "post": { "security": [], "summary": "Cadastra usuário", "responses": { "201": { "description": "Criado" }, "409": { "description": "Usuário já existe" } } } },
-    "/auth/login": { "post": { "security": [], "summary": "Login (retorna JWT)", "responses": { "200": { "description": "token" }, "401": { "description": "Credenciais inválidas" } } } },
-    "/auth/basic": { "get": { "security": [{ "basicAuth": [] }], "summary": "Identifica usuário via HTTP Basic", "responses": { "200": { "description": "usuário" }, "401": { "description": "Não autorizado" } } } },
-    "/clients": { "get": { "summary": "Lista clientes" }, "post": { "summary": "Cria cliente" } },
-    "/clients/{id}": { "get": { "summary": "Busca cliente" }, "put": { "summary": "Atualiza cliente" }, "delete": { "summary": "Remove cliente" } },
-    "/suppliers": { "get": { "summary": "Lista fornecedores" }, "post": { "summary": "Cria fornecedor" } },
-    "/suppliers/{id}": { "get": { "summary": "Busca fornecedor" }, "put": { "summary": "Atualiza fornecedor" }, "delete": { "summary": "Remove fornecedor" } },
-    "/products": { "get": { "summary": "Lista produtos (filtro ?supplierId=)" }, "post": { "summary": "Cria produto" } },
-    "/products/{id}": { "get": { "summary": "Busca produto" }, "put": { "summary": "Atualiza produto" }, "delete": { "summary": "Remove produto" } },
-    "/sales": { "get": { "summary": "Lista vendas (filtros ?clientId=&productId=)" }, "post": { "summary": "Registra venda (valida e baixa estoque)" } },
-    "/sales/{id}": { "get": { "summary": "Busca venda" }, "delete": { "summary": "Remove venda (devolve estoque)" } }
+    "/health": {
+      "get": {
+        "security": [],
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "security": [],
+        "summary": "Cadastra usuário",
+        "responses": {
+          "201": {
+            "description": "Criado"
+          },
+          "409": {
+            "description": "Usuário já existe"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "security": [],
+        "summary": "Login (retorna JWT)",
+        "responses": {
+          "200": {
+            "description": "token"
+          },
+          "401": {
+            "description": "Credenciais inválidas"
+          }
+        }
+      }
+    },
+    "/auth/basic": {
+      "get": {
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "summary": "Identifica usuário via HTTP Basic",
+        "responses": {
+          "200": {
+            "description": "usuário"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/clients": {
+      "get": {
+        "summary": "Lista clientes"
+      },
+      "post": {
+        "summary": "Cria cliente"
+      }
+    },
+    "/clients/{id}": {
+      "get": {
+        "summary": "Busca cliente"
+      },
+      "put": {
+        "summary": "Atualiza cliente"
+      },
+      "delete": {
+        "summary": "Remove cliente"
+      }
+    },
+    "/suppliers": {
+      "get": {
+        "summary": "Lista fornecedores"
+      },
+      "post": {
+        "summary": "Cria fornecedor"
+      }
+    },
+    "/suppliers/{id}": {
+      "get": {
+        "summary": "Busca fornecedor"
+      },
+      "put": {
+        "summary": "Atualiza fornecedor"
+      },
+      "delete": {
+        "summary": "Remove fornecedor"
+      }
+    },
+    "/products": {
+      "get": {
+        "summary": "Lista produtos (filtro ?supplierId=)"
+      },
+      "post": {
+        "summary": "Cria produto"
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "summary": "Busca produto"
+      },
+      "put": {
+        "summary": "Atualiza produto"
+      },
+      "delete": {
+        "summary": "Remove produto"
+      }
+    },
+    "/sales": {
+      "get": {
+        "summary": "Lista vendas (filtros ?clientId=&productId=)"
+      },
+      "post": {
+        "summary": "Registra venda (valida e baixa estoque)"
+      }
+    },
+    "/sales/{id}": {
+      "get": {
+        "summary": "Busca venda"
+      },
+      "delete": {
+        "summary": "Remove venda (devolve estoque)"
+      }
+    },
+    "/products/{id}/info": {
+      "get": {
+        "summary": "Informações NoSQL do produto"
+      },
+      "post": {
+        "summary": "Cria informações (descrição, fabricante, dimensões)"
+      },
+      "put": {
+        "summary": "Atualiza informações"
+      },
+      "delete": {
+        "summary": "Remove informações"
+      }
+    },
+    "/products/{id}/reviews": {
+      "post": {
+        "summary": "Adiciona avaliação (score 1 a 5)"
+      }
+    },
+    "/products/{id}/reviews/{reviewId}": {
+      "delete": {
+        "summary": "Remove avaliação"
+      }
+    },
+    "/oauth/token": {
+      "post": {
+        "security": [],
+        "summary": "OAuth 2.0 client credentials",
+        "responses": {
+          "200": {
+            "description": "access_token"
+          },
+          "401": {
+            "description": "invalid_client"
+          }
+        }
+      }
+    },
+    "/graphql": {
+      "post": {
+        "summary": "Endpoint GraphQL"
+      }
+    }
   }
 }

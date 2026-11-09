@@ -12,6 +12,15 @@ services:
       interval: 5s
       retries: 10
 
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongodata:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ping:1})"]
+      interval: 5s
+      retries: 10
+
   api:
     build: .
     ports:
@@ -19,11 +28,15 @@ services:
     environment:
       JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET no .env}
       DATABASE_URL: postgres://vendas:${POSTGRES_PASSWORD}@db:5432/vendas
+      MONGO_URL: mongodb://mongo:27017/vendas
       PORT: 3000
     depends_on:
       db:
+        condition: service_healthy
+      mongo:
         condition: service_healthy
     restart: unless-stopped
 
 volumes:
   pgdata:
+  mongodata:

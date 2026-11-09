@@ -1,19 +1,29 @@
 const { createApp } = require('./app');
 const config = require('./config');
+const { createMemoryRepositories } = require('./repositories/memoryRepository');
 
 async function main() {
-  let repositories;
+  const repositories = createMemoryRepositories();
 
-  // Com DATABASE_URL (ex.: postgres://user:pass@host:5432/db) persiste via Sequelize;
-  // sem ela, usa armazenamento em memória.
+  // DATABASE_URL (ex.: postgres://user:pass@host:5432/db) -> dados relacionais via Sequelize.
   if (process.env.DATABASE_URL) {
     const { Sequelize } = require('sequelize');
     const { createSequelizeRepositories } = require('./repositories/sequelizeRepository');
     const sequelize = new Sequelize(process.env.DATABASE_URL, { logging: false });
     await sequelize.authenticate();
-    repositories = createSequelizeRepositories(sequelize);
+    Object.assign(repositories, createSequelizeRepositories(sequelize));
     await sequelize.sync();
-    console.log('Banco de dados conectado (Sequelize)');
+    console.log('PostgreSQL conectado (Sequelize)');
+  }
+
+  // MONGO_URL (ex.: mongodb://host:27017/vendas) -> ProductInfo e avaliações via Mongoose.
+  if (process.env.MONGO_URL) {
+    const mongoose = require('mongoose');
+    const { createMongooseProductInfoRepository } = require('./repositories/productInfoRepository');
+    await mongoose.connect(process.env.MONGO_URL);
+    repositories.productInfos = createMongooseProductInfoRepository(mongoose.connection);
+    await repositories.productInfos.init();
+    console.log('MongoDB conectado (Mongoose)');
   }
 
   createApp({ repositories }).listen(config.port, () => {

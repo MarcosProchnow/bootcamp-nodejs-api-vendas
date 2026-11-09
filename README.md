@@ -8,10 +8,10 @@ Projeto desenvolvido no **Bootcamp Desenvolvedor(a) Node.js** (IGTI/XPE), parte 
 | Bootcamp Desenvolvedor(a) React |
 | **Bootcamp Desenvolvedor(a) Node.js** ← este repositório |
 
-API REST de vendas com clientes, fornecedores, produtos e vendas, organizada em camadas (rotas/controller → service → repository), autenticação JWT, HTTP Basic e OAuth 2.0 (client credentials), GraphQL, persistência com Sequelize/PostgreSQL, validação, tratamento de erros, logs, documentação OpenAPI, testes automatizados, Docker e CI.
+API REST de vendas com clientes, fornecedores, produtos e vendas, organizada em camadas (rotas/controller → service → repository), autenticação JWT, HTTP Basic e OAuth 2.0 (client credentials), GraphQL, persistência com Sequelize/PostgreSQL, MongoDB/Mongoose, validação, tratamento de erros, logs, documentação OpenAPI, testes automatizados, Docker e CI.
 
 ## Stack
-Node.js 18+ · Express · GraphQL · Sequelize/PostgreSQL · JSON Web Token · OAuth 2.0 · Jest · supertest · Docker · GitHub Actions
+Node.js 18+ · Express · GraphQL · Sequelize/PostgreSQL · MongoDB/Mongoose · JSON Web Token · OAuth 2.0 · Jest · supertest · Docker · GitHub Actions
 
 ## Como executar
 
@@ -34,7 +34,7 @@ JWT_SECRET=$(openssl rand -hex 32) POSTGRES_PASSWORD=$(openssl rand -hex 16) doc
 | Recurso | Rotas |
 | --- | --- |
 | Público | `GET /health`, `POST /auth/register`, `POST /auth/login`, `GET /auth/basic`, `POST /oauth/token`, `GET /docs/openapi.json` |
-| Protegido (Bearer JWT) | `/clients`, `/suppliers`, `/products` (GET, POST, PUT, DELETE), `/sales` (GET, POST, DELETE), `POST /graphql` |
+| Protegido (Bearer JWT) | `/clients`, `/suppliers`, `/products` (GET, POST, PUT, DELETE), `/sales` (GET, POST, DELETE), `/products/:id/info` e `/products/:id/reviews` (MongoDB), `POST /graphql` |
 
 Regras de negócio: produto exige fornecedor existente; venda valida cliente/produto, **recusa estoque insuficiente (409)**, calcula o total e baixa o estoque; excluir a venda **devolve o estoque**; listagens aceitam filtros por query string (`/products?supplierId=1`).
 
@@ -69,6 +69,7 @@ Veja [docs/ATIVIDADES.md](docs/ATIVIDADES.md).
 ## Persistência
 - Sem `DATABASE_URL`: dados em memória.
 - Com `DATABASE_URL=postgres://...`: Sequelize + PostgreSQL (`docker compose` já sobe o banco). Os testes usam SQLite em memória com a mesma camada de repository.
+- `MONGO_URL=mongodb://...`: informações e avaliações de produto no MongoDB via Mongoose (sem ela, ficam em memória). No CI um MongoDB sobe como service container; localmente rode `MONGO_URL=mongodb://localhost:27017 npm test` para incluir esses testes.
 
 ## OAuth 2.0 e GraphQL
 ```bash
@@ -78,8 +79,8 @@ curl -X POST localhost:3000/oauth/token -d grant_type=client_credentials \
 `POST /graphql` (Bearer): `{ products(supplierId: 1) { name supplier { name } } }`.
 
 ## Limitações e próximos passos
-- MongoDB/Mongoose (avaliações de produto) e OpenID Connect ainda não foram implementados.
-- A integração com PostgreSQL real via `docker compose` não foi exercitada; os testes usam SQLite.
+- OpenID Connect e demais fluxos do OAuth 2.0 ainda não foram implementados.
+- A integração com PostgreSQL real via `docker compose` não foi exercitada; os testes usam SQLite. O MongoDB é testado de verdade apenas no CI.
 - Hashing de senha com `scrypt`; em produção use HTTPS.
 
 ## Licença

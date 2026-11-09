@@ -22,7 +22,7 @@ Cada item da ementa e o que foi feito neste repositório. As avaliações da pla
 | 3 | Estoque na venda e na exclusão | feito | `createSalesService`, `tests/sales.test.js` |
 | 3 | Consulta por query string | feito | `memoryRepository.list`, `tests/crud.test.js` |
 | 3 | Sequelize (PostgreSQL em produção, SQLite nos testes), associações | feito | `src/db/models.js`, `src/repositories/sequelizeRepository.js`, `tests/sequelize.test.js` |
-| 3 | MongoDB/Mongoose (ProductInfo, reviews) | pendente | — |
+| 3 | MongoDB/Mongoose (ProductInfo, avaliações) | feito | `src/repositories/productInfoRepository.js`, `src/services/productInfoService.js`, `tests/productInfo.test.js` |
 | 4 | Testes unitários/integração (Jest, supertest) | feito | `tests/` |
 | 4 | Cobertura | feito | `npm run test:coverage` |
 | 4 | Git / GitHub Flow | CI em `.github/workflows/ci.yml` | — |
