@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>API de Vendas — painel</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>API de Vendas</h1>
+      <p>Painel simples (Módulo 0: HTML, CSS e JavaScript) que consome a API REST.</p>
+    </header>
+
+    <main>
+      <section id="login-section">
+        <h2>Entrar</h2>
+        <form id="login-form">
+          <label>Usuário <input name="username" required autocomplete="username" /></label>
+          <label>Senha <input name="password" type="password" minlength="6" required autocomplete="current-password" /></label>
+          <div class="row">
+            <button type="submit">Entrar</button>
+            <button type="button" id="register-btn" class="secondary">Cadastrar</button>
+          </div>
+        </form>
+        <p id="login-msg" role="status"></p>
+      </section>
+
+      <section id="app-section" hidden>
+        <div class="row between">
+          <h2>Clientes</h2>
+          <button id="logout-btn" class="secondary">Sair</button>
+        </div>
+        <form id="client-form">
+          <label>Nome <input name="name" required /></label>
+          <label>E-mail <input name="email" type="email" required /></label>
+          <button type="submit">Adicionar</button>
+        </form>
+        <p id="app-msg" role="status"></p>
+        <ul id="clients"></ul>
+
+        <h2>Produtos</h2>
+        <ul id="products"></ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
