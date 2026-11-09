@@ -1,7 +1,7 @@
 {
   "name": "bootcamp-nodejs-api-vendas",
-  "version": "1.0.0",
-  "description": "API REST de vendas (Express, JWT, camadas, Jest) - Bootcamp Desenvolvedor(a) Node.js | Pós-Graduação Full Stack e Full Cycle",
+  "version": "1.1.0",
+  "description": "API REST de vendas (Express, JWT, OAuth 2.0, GraphQL, Sequelize, Jest) - Bootcamp Desenvolvedor(a) Node.js | Pós-Graduação Full Stack e Full Cycle",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -12,15 +12,21 @@
   "engines": {
     "node": ">=18"
   },
-  "keywords": ["nodejs", "express", "jwt", "jest", "api-rest", "bootcamp"],
+  "keywords": ["nodejs", "express", "jwt", "oauth2", "graphql", "sequelize", "jest", "bootcamp"],
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2"
+    "graphql": "^16.8.1",
+    "graphql-http": "^1.22.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.5",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.3"
   },
   "devDependencies": {
     "jest": "^29.7.0",
+    "sqlite3": "^5.1.7",
     "supertest": "^7.0.0"
   },
   "jest": {

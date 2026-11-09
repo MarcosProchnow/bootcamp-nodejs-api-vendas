@@ -1,9 +1,29 @@
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: vendas
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+      POSTGRES_DB: vendas
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vendas"]
+      interval: 5s
+      retries: 10
+
   api:
     build: .
     ports:
       - "3000:3000"
     environment:
       JWT_SECRET: ${JWT_SECRET:?defina JWT_SECRET no .env}
+      DATABASE_URL: postgres://vendas:${POSTGRES_PASSWORD}@db:5432/vendas
       PORT: 3000
+    depends_on:
+      db:
+        condition: service_healthy
     restart: unless-stopped
+
+volumes:
+  pgdata:

@@ -31,4 +31,14 @@ function createMemoryRepository() {
   };
 }
 
-module.exports = { createMemoryRepository };
+function createMemoryRepositories() {
+  return {
+    clients: createMemoryRepository(),
+    suppliers: createMemoryRepository(),
+    products: createMemoryRepository(),
+    sales: createMemoryRepository(),
+    users: createMemoryRepository(),
+  };
+}
+
+module.exports = { createMemoryRepository, createMemoryRepositories };
