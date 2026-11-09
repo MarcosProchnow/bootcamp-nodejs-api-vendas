@@ -4,7 +4,7 @@ ENV NODE_ENV=production
 
 # copia só os manifests antes do código para aproveitar o cache de camadas
 COPY package*.json ./
-RUN npm install --omit=dev
+RUN npm ci --omit=dev
 
 COPY src ./src
 COPY docs ./docs

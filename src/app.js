@@ -1,6 +1,8 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const openapiDoc = require('../docs/openapi.json');
 const config = require('./config');
 const requestLogger = require('./middlewares/requestLogger');
 const authenticate = require('./middlewares/authenticate');
@@ -42,6 +44,7 @@ function createApp({ repositories } = {}) {
   app.use(express.urlencoded({ extended: false }));
   app.use(requestLogger);
   app.use('/docs', express.static(path.join(__dirname, '..', 'docs')));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiDoc));
 
   app.get('/health', (req, res) => res.json({ status: 'ok' }));
 

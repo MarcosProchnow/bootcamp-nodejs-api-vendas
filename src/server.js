@@ -1,5 +1,6 @@
 const { createApp } = require('./app');
 const config = require('./config');
+const logger = require('./logger');
 const { createMemoryRepositories } = require('./repositories/memoryRepository');
 
 async function main() {
@@ -13,7 +14,7 @@ async function main() {
     await sequelize.authenticate();
     Object.assign(repositories, createSequelizeRepositories(sequelize));
     await sequelize.sync();
-    console.log('PostgreSQL conectado (Sequelize)');
+    logger.info('PostgreSQL conectado (Sequelize)');
   }
 
   // MONGO_URL (ex.: mongodb://host:27017/vendas) -> ProductInfo e avaliações via Mongoose.
@@ -23,15 +24,15 @@ async function main() {
     await mongoose.connect(process.env.MONGO_URL);
     repositories.productInfos = createMongooseProductInfoRepository(mongoose.connection);
     await repositories.productInfos.init();
-    console.log('MongoDB conectado (Mongoose)');
+    logger.info('MongoDB conectado (Mongoose)');
   }
 
   createApp({ repositories }).listen(config.port, () => {
-    console.log(`API de vendas rodando na porta ${config.port}`);
+    logger.info(`API de vendas rodando na porta ${config.port}`);
   });
 }
 
 main().catch((err) => {
-  console.error(err);
+  logger.error(err.stack || String(err));
   process.exit(1);
 });
