@@ -1,9 +1,10 @@
-// Módulo 1 - gravação de logs: uma linha por requisição (silencioso nos testes).
+const logger = require('../logger');
+
+// Uma linha de log por requisição.
 module.exports = (req, res, next) => {
-  if (process.env.NODE_ENV === 'test') return next();
   const start = Date.now();
   res.on('finish', () => {
-    console.log(`${new Date().toISOString()} ${req.method} ${req.originalUrl} ${res.statusCode} ${Date.now() - start}ms`);
+    logger.info(`${req.method} ${req.originalUrl} ${res.statusCode} ${Date.now() - start}ms`);
   });
-  return next();
+  next();
 };

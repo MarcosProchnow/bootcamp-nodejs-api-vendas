@@ -69,7 +69,8 @@ function createSalesService(repo, clientsService, productsService, productsRepo)
         clientId: body.clientId,
         productId: body.productId,
         quantity: body.quantity,
-        total: product.price * body.quantity,
+        // arredonda para centavos: 0.1 * 3 === 0.30000000000000004 em ponto flutuante
+        total: Math.round(product.price * body.quantity * 100) / 100,
       });
     },
 
